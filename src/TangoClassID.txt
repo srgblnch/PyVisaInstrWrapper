@@ -1,0 +1,11 @@
+/**
+ * Device Class Identification:
+ * 
+ * Class Name   :	PyVisaInstrWrapper
+ * Contact      :	sblanch@cells.es
+ * Class Family :	Instrumentation
+ * Platform     :	All Platforms
+ * Bus          :	Visa
+ * Manufacturer :	none
+ * Reference    :	
+ */
