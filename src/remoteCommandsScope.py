@@ -58,7 +58,9 @@ class ScopeInstructionSet(remoteCommands.InstructionSet):
                         'VPeakToPeak':       self.vpp_read,
                         'VPeakToPeakFn':     self.vppFn_read,
                         'VoltageMax':        self.voltageMax_read,
+                        'VoltageMaxFn':        self.voltageMaxFn_read,
                         'VoltageMin':        self.voltageMin_read,
+                        'VoltageMinFn':        self.voltageMinFn_read,
                         'VoltageUpper':      self.voltageUpper_read,
                         'VoltageLower':      self.voltageLower_read,
                         'Scale':             self.scale_read,
@@ -276,8 +278,12 @@ class Agilent(ScopeInstructionSet):
         return ":MEASure:VPP? FUNCtion%d"%num
     def voltageMax_read(self,ch):
         return ":MEASure:VMAX? CHANnel%d"%ch
+    def voltageMaxFn_read(self,ch):
+        return ":MEASure:VMAX? FUNCtion%d"%ch
     def voltageMin_read(self,ch):
         return ":MEASure:VMIN? CHANnel%d"%ch
+    def voltageMinFn_read(self,ch):
+        return ":MEASure:VMIN? FUNCtion%d"%ch
     def voltageUpper_read(self,ch):
         return ":MEASure:VUPPer? CHANnel%d"%ch
     def voltageLower_read(self,ch):

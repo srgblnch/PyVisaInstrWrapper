@@ -459,6 +459,10 @@ class Scope(PyTango.Device_4Impl,threadVisa.ThreadVisa):
         ROattributes = {#'key':[datatype,readMethod]
                         'Amplitude':   [PyTango.DevDouble,
                                         Scope.read_AmplitudeFnN],
+                        'VoltageMax':  [PyTango.DevDouble,
+                                        Scope.read_VoltageMaxFnN],
+                        'VoltageMin':  [PyTango.DevDouble,
+                                        Scope.read_VoltageMinFnN],
                         'VPeakToPeak': [PyTango.DevDouble,
                                         Scope.read_VPeakToPeakFnN],
                         'State':       [PyTango.DevBoolean,
@@ -742,6 +746,27 @@ class Scope(PyTango.Device_4Impl,threadVisa.ThreadVisa):
 
 
 #------------------------------------------------------------------
+#    Read read_VoltageMaxFnN dyn_attribute
+#------------------------------------------------------------------
+    def read_VoltageMaxFnN(self, attr):
+        self.debug_stream("In %s::read_VoltageMaxFnN()"%self.get_name())
+        
+        #    Add your own code here
+        funcNum = int(attr.get_name().split("Fn")[1])
+        if self.isFunctionOn[funcNum]:
+            #_voltageMax = self.ask(self.instructionSet.query("voltageMax",chNum))
+            _voltageMax = self.__readAttributes[attr.get_name()]
+            if not _voltageMax == float('-inf'):
+                attr.set_value_date_quality(self.__postProcess(_voltageMax),\
+                                            self.__readAttributes[attr.get_name()+"_timestamp"],\
+                                            PyTango.AttrQuality.ATTR_VALID)
+            else:
+                raise AttributeError,"Not supported by this manufacturer and/or model"
+        else:
+            raise AttributeError,"Not allow, function %d is not open"%chNum
+
+
+#------------------------------------------------------------------
 #    Read read_VoltageMinChN dyn_attribute
 #------------------------------------------------------------------
     def read_VoltageMinChN(self, attr):
@@ -760,6 +785,27 @@ class Scope(PyTango.Device_4Impl,threadVisa.ThreadVisa):
                 raise AttributeError,"Not supported by this manufacturer and/or model"
         else:
             raise AttributeError,"Not allow, channel %d is not open"%chNum
+
+
+#------------------------------------------------------------------
+#    Read read_VoltageMinFnN dyn_attribute
+#------------------------------------------------------------------
+    def read_VoltageMinFnN(self, attr):
+        self.debug_stream("In %s::read_VoltageMinFnN()"%self.get_name())
+        
+        #    Add your own code here
+        funcNum = int(attr.get_name().split("Fn")[1])
+        if self.isFunctionOn[funcNum]:
+            #_voltageMin = self.ask(self.instructionSet.query("voltageMin",chNum))
+            _voltageMin = self.__readAttributes[attr.get_name()]
+            if not _voltageMin == float('-inf'):
+                attr.set_value_date_quality(self.__postProcess(_voltageMin),\
+                                            self.__readAttributes[attr.get_name()+"_timestamp"],\
+                                            PyTango.AttrQuality.ATTR_VALID)
+            else:
+                raise AttributeError,"Not supported by this manufacturer and/or model"
+        else:
+            raise AttributeError,"Not allow, function %d is not open"%chNum
 
 
 #------------------------------------------------------------------
