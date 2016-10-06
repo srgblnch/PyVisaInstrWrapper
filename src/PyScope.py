@@ -48,7 +48,7 @@
 
 import PyTango
 import sys
-from tau.core.utils import containers
+#from tau.core.utils import containers
 import time
 import remoteCommandsScope
 #from PyTango_utils.dynamic import *
